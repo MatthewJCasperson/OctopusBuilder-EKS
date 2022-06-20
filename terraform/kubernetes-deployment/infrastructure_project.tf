@@ -100,25 +100,11 @@ resource "octopusdeploy_deployment_process" "deploy_cluster" {
           nodeGroups:
             - name: ng-1
               instanceType: t3a.small
-              desiredCapacity: 1
+              desiredCapacity: 3
               volumeSize: 80
               iam:
                 withAddonPolicies:
                   imageBuilder: true
-
-          fargateProfiles:
-            - name: fp-default
-              selectors:
-                - namespace: default
-                - namespace: kube-system
-            - name: fp-products
-              selectors:
-                - labels:
-                    app: frontend
-            - name: fp-frontend
-              selectors:
-                - labels:
-                    app: frontend
           EOF
 
             # Use eksctl to create the new cluster.
