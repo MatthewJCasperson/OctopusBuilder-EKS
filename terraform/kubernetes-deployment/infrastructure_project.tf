@@ -119,10 +119,6 @@ resource "octopusdeploy_deployment_process" "deploy_cluster" {
               selectors:
                 - labels:
                     app: frontend
-            - name: fp-worker
-              selectors:
-                - labels:
-                    app: worker
           EOF
 
             # Use eksctl to create the new cluster.
