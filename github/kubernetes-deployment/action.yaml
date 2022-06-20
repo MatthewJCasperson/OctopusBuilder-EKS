@@ -132,7 +132,7 @@ runs:
         
         for i in "${arr[@]}"
         do
-          ID=$(curl --silent -H "X-Octopus-ApiKey: ${{ inputs.octopus_apikey }}" ${{ inputs.octopus_server }}/api/${{ inputs.octopus_space_id }}/projects/all?name=$i | jq -r ".[0].Id")
+          ID=$(curl --silent -H "X-Octopus-ApiKey: ${{ inputs.octopus_apikey }}" ${{ inputs.octopus_server }}/api/${{ inputs.octopus_space_id }}/projects?name=$i | jq -r ".Items[0].Id")
           if [[ -n "$ID" && "$ID" != "null" ]]; then
             echo "Deleting project $i"
             curl --silent -X DELETE -H "X-Octopus-ApiKey: ${{ inputs.octopus_apikey }}" ${{ inputs.octopus_server }}/api/${{ inputs.octopus_space_id }}/projects/${ID}
@@ -168,6 +168,7 @@ runs:
         octo create-release
         --project "EKS Cluster"
         --deployTo "Development (App)"
+        --version "1.0.0"
         --server ${{ inputs.octopus_server }}
         --apiKey ${{ inputs.octopus_apikey }}
         --space "${{ inputs.octopus_space }}"
